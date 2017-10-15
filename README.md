@@ -36,7 +36,7 @@ SLOW toString method on the Person class, if possible.
 # Step 2 (Guava): 
 
 - The preconditions on the method calls are currently pretty long and uninteresting. Replace them with 
-a Guava Precondition equivalent (Note there is a Java)
+a Guava Precondition equivalent
 - The outputting of the command line arguments is currently running in a for loop since arrays don't 
 get shown very nicely. Lets rather display a list directly. Use the Guava collection utilities found in the Lists 
 interface to convert the array to a list, and display that directly.
