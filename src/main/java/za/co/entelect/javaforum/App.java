@@ -4,12 +4,12 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.TreeMultiset;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.LineIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 
 /**
@@ -28,13 +28,18 @@ public class App {
         File file = new File(args[0]);
 
         Multiset<Character> characterCounts = TreeMultiset.create();
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            for (String line; (line = br.readLine()) != null; ) {
-                Person person = new Person(line.trim());
+
+        LineIterator iterator = null;
+        try {
+            iterator = FileUtils.lineIterator(file, "UTF-8");
+            while (iterator.hasNext()) {
+                Person person = new Person(iterator.nextLine().trim());
                 characterCounts.addAll(person.getCharacterCounts());
             }
         } catch (IOException ex) {
             LOGGER.error("Exception!", ex);
+        } finally {
+            LineIterator.closeQuietly(iterator);
         }
         LOGGER.info("Final result: " + characterCounts);
     }
