@@ -18,6 +18,8 @@ Just run:
 - The toString method on the Person class is purposefully slow
 - The app runs through Spring Boot. This is just done to make the imports and actual running of the app easier. 
 You DONT need to know Spring Boot to understand the app. 
+- A basic logback configuration file is already configured in the resources folder. Since spring includes Logback
+by default, our app will automatically use this as the logging framework.
 
 # Step 1 (logging):
 
