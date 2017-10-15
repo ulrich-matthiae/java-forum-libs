@@ -1,5 +1,8 @@
 package za.co.entelect.javaforum;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -13,12 +16,14 @@ import java.util.Map;
  */
 public class App {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
+
     public static void main(String[] args) {
         if (args.length != 1) {
             throw new RuntimeException("There should be only one argument");
         }
         for (String arg : args) {
-            System.out.println("Got arg: "+ arg);
+            LOGGER.info("Got arg: {}", arg);
         }
 
         File file = new File(args[0]);
@@ -38,9 +43,9 @@ public class App {
 
             }
         } catch (IOException ex) {
-            ex.printStackTrace();
+            LOGGER.error("Exception!", ex);
         }
-        System.out.println("Final result: " + characterCounts);
+        LOGGER.info("Final result: " + characterCounts);
     }
 
 }

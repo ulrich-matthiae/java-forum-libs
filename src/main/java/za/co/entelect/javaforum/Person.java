@@ -1,9 +1,14 @@
 package za.co.entelect.javaforum;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Person {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Person.class);
 
     private String name;
 
@@ -34,7 +39,7 @@ public class Person {
             }
         }
         //Debugging message:
-        System.out.println("For '" + this + "', counts are: " + counts);
+        LOGGER.debug("For '{}', counts are: {}", this, counts);
         return counts;
     }
 
@@ -59,7 +64,7 @@ public class Person {
         try {
             Thread.sleep(200);
         } catch (InterruptedException ex) {
-            ex.printStackTrace();
+            LOGGER.error("Exception thown in sleep", ex);
         }
         return "Person{name='" + name + "'}";
     }
