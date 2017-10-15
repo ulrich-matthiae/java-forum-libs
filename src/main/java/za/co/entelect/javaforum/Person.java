@@ -1,5 +1,10 @@
 package za.co.entelect.javaforum;
 
+import com.google.common.base.CharMatcher;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Multiset;
+import com.google.common.collect.TreeMultiset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,10 +18,7 @@ public class Person {
     private String name;
 
     public Person(String name) {
-        if (name == null) {
-            throw new RuntimeException("name cannot be null");
-        }
-        this.name = name;
+        this.name = Preconditions.checkNotNull(name, "name cannot be null");
     }
 
     public String getName() {
@@ -27,16 +29,11 @@ public class Person {
         this.name = name;
     }
 
-    public Map<Character, Integer> getCharacterCounts() {
-        Map<Character, Integer> counts = new HashMap<>();
-        for (char c : name.toCharArray()) {
-            if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
-                if (counts.containsKey(c)) {
-                    counts.put(c, counts.get(c) + 1);
-                } else {
-                    counts.put(c, 1);
-                }
-            }
+    public Multiset<Character> getCharacterCounts() {
+        Multiset<Character> counts = TreeMultiset.create();
+
+        for (char c : CharMatcher.javaLetter().retainFrom(name).toCharArray()) {
+            counts.add(c);
         }
         //Debugging message:
         LOGGER.debug("For '{}', counts are: {}", this, counts);
